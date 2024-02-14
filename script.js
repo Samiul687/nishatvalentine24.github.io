@@ -21,14 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
           audioPlayed = true;
           backgroundMusic.isPlaying = true; 
         }).catch(e => console.error("Error with decoding audio data", e));
-    } else if (!backgroundMusic.isPlaying) { 
-      backgroundMusic.start(0);
-      backgroundMusic.isPlaying = true; 
-    }
+      }
+    // } else if (!backgroundMusic.isPlaying) { 
+    //   backgroundMusic.start(0);
+    //   backgroundMusic.isPlaying = true; 
+    // }
   }
   
 
-  ['keydown', 'touchstart', 'mouseover'].forEach(eventType => {
+  ['touchstart', 'mouseover'].forEach(eventType => {
     window.addEventListener(eventType, startAudio, { once: true });
   });
 
