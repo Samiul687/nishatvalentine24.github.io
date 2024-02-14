@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
   let backgroundMusic;
   let audioPlayed = false;
 
@@ -21,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.start(0);
           audioPlayed = true;
         }).catch(e => console.error("Error with decoding audio data", e));
+    } else if (!backgroundMusic.isPlaying) { // Check if background music is not playing
+      backgroundMusic.start(0);
     }
   }
 
