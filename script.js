@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let hideTimeout = null;
 
+  let isButtonAltered = false; 
+
   function teleportButton() {
     shootHeartsFromButton();
   
@@ -52,15 +54,26 @@ document.addEventListener('DOMContentLoaded', () => {
       const randomX = Math.random() * maxX;
       const randomY = Math.random() * maxY;
       noButton.style.position = 'absolute';
-      noButton.style.left = randomX + 'px';
-      noButton.style.top = randomY + 'px';
+      noButton.style.left = `${randomX}px`;
+      noButton.style.top = `${randomY}px`;
   
-      const originalText = noButton.textContent; 
-      noButton.textContent = "😈"; 
+      if (isButtonAltered) {
+        noButton.textContent = "No 😔";
+        isButtonAltered = false;
+        if (revertTextTimeout) {
+          clearTimeout(revertTextTimeout);
+        }
+      }
   
-      setTimeout(() => {
-        noButton.textContent = originalText; 
-      }, 1000); 
+      if (!isButtonAltered) {
+        noButton.textContent = "😈";
+        isButtonAltered = true;
+  
+        revertTextTimeout = setTimeout(() => {
+          noButton.textContent = "No";
+          isButtonAltered = false; 
+        }, 1000); 
+      }
   
       const randomMessage = messages[Math.floor(Math.random() * messages.length)];
       notification.textContent = randomMessage;
@@ -75,6 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     }, 200); 
   }
+  
+  noButton.addEventListener('mouseenter', teleportButton);
+  noButton.addEventListener('click', teleportButton);
+  
   
 function shootHeartsFromButton() {
   const numberOfHearts = 10; 
