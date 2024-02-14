@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const yesButton = document.querySelector('.yes-btn');
+  const valentineModal = document.getElementById('valentineModal');
+  const closeButton = document.querySelector('.close-btn');
+
+  yesButton.addEventListener('click', () => {
+    valentineModal.style.display = 'block';
+  });
+
+  closeButton.addEventListener('click', () => {
+    valentineModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target == valentineModal) {
+      valentineModal.style.display = 'none';
+    }
+  });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let backgroundMusic;
   let audioPlayed = false;
@@ -108,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   noButton.addEventListener('click', teleportButton);
   
   
+
 function shootHeartsFromButton() {
   const numberOfHearts = 10; 
 
