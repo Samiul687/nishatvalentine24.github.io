@@ -2,14 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let backgroundMusic;
   let audioPlayed = false;
+  let musicStarted = false;
+  let audioLoading = false; 
 
   function startAudio() {
     if (!audioPlayed && audioContext.state === 'suspended') {
       audioContext.resume();
-      console.log("audioContext.resume()");
+      console.log("backgroundMusic.start(0)");
     }
-  
-    if (!backgroundMusic) {
+
+    if ((!backgroundMusic || !musicStarted) && !audioLoading) {
+      audioLoading = true; 
+      console.log("Entering if statement");
       fetch('Starry Night (Piano).mp3') 
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
@@ -21,14 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.start(0);
           console.log("backgroundMusic.start(0)");
           audioPlayed = true;
-          backgroundMusic.isPlaying = true; 
-        }).catch(e => console.error("Error with decoding audio data", e));
-      }
-    // } else if (!backgroundMusic.isPlaying) { 
-    //   backgroundMusic.start(0);
-    //   backgroundMusic.isPlaying = true; 
-    // }
+          musicStarted = true; 
+        }).catch(e => console.error("Error with decoding audio data", e))
+        .finally(() => {
+          audioLoading = false; 
+        });
+    }
   }
+
   
 
   ['touchstart', 'mouseover'].forEach(eventType => {
