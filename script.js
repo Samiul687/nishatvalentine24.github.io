@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function startAudio() {
     if (!audioPlayed && audioContext.state === 'suspended') {
       audioContext.resume();
+      console.log("audioContext.resume()");
     }
   
     if (!backgroundMusic) {
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.loop = true; 
           backgroundMusic.connect(audioContext.destination);
           backgroundMusic.start(0);
+          console.log("backgroundMusic.start(0)");
           audioPlayed = true;
           backgroundMusic.isPlaying = true; 
         }).catch(e => console.error("Error with decoding audio data", e));
