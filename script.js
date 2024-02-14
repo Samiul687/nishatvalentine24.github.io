@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
 
-  ['click', 'keydown', 'touchstart', 'mouseover'].forEach(eventType => {
+  ['keydown', 'touchstart', 'mouseover'].forEach(eventType => {
     window.addEventListener(eventType, startAudio, { once: true });
   });
 
