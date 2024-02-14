@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!audioPlayed && audioContext.state === 'suspended') {
       audioContext.resume();
     }
-
+  
     if (!backgroundMusic) {
       fetch('Starry Night (Piano).mp3') 
         .then(response => response.arrayBuffer())
@@ -19,11 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.connect(audioContext.destination);
           backgroundMusic.start(0);
           audioPlayed = true;
+          backgroundMusic.isPlaying = true; 
         }).catch(e => console.error("Error with decoding audio data", e));
     } else if (!backgroundMusic.isPlaying) { 
       backgroundMusic.start(0);
+      backgroundMusic.isPlaying = true; 
     }
   }
+  
 
   ['click', 'keydown', 'touchstart', 'mouseover'].forEach(eventType => {
     window.addEventListener(eventType, startAudio, { once: true });
