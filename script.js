@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.start(0);
           audioPlayed = true;
         }).catch(e => console.error("Error with decoding audio data", e));
-    } else if (!backgroundMusic.isPlaying) { // Check if background music is not playing
+    } else if (!backgroundMusic.isPlaying) { 
       backgroundMusic.start(0);
     }
   }
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       noButton.style.top = `${randomY}px`;
   
       if (isButtonAltered) {
-        noButton.textContent = "No 😔";
+        noButton.textContent = "No";
         isButtonAltered = false;
         if (revertTextTimeout) {
           clearTimeout(revertTextTimeout);
