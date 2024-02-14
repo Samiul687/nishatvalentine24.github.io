@@ -83,6 +83,89 @@ body {
   text-shadow: 0 0 8px #ff1493;
 }
 
+.modal {
+  display: none; /* Keep modal hidden until it's triggered */
+  position: fixed; /* Position fixed relative to the viewport */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+  z-index: 1050; /* High z-index to ensure it's above other content */
+}
+
+.modal-content {
+  position: relative;
+  background: linear-gradient(to right, #ff4646, #ff00c8); /* Pink gradient */
+  color: white;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation: modalOpen 0.4s ease-out;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+}
+
+.modal-content h2 {
+  font-size: 40px;
+  font-weight: bold;
+  color: #000000; /* White text color */
+  text-shadow: 0 0 5px #9b30ff, /* First layer of glow */
+               0 0 10px #9b30ff, /* Second layer of glow */
+               0 0 15px #9b30ff, /* Third layer of glow */
+               0 0 20px #9b30ff; /* Fourth layer of glow */
+  
+}
+
+.modal-content p {
+  font-size: 30px;
+  color: #ffffff; /* White text color */
+  text-shadow: 0 0 5px #9b30ff, /* First layer of glow */
+               0 0 10px #9b30ff, /* Second layer of glow */
+               0 0 15px #9b30ff, /* Third layer of glow */
+               0 0 20px #9b30ff; /* Fourth layer of glow */
+}
+
+
+.close-btn {
+  position: absolute; /* This positions the close button absolutely within the relative parent */
+  top: -10px; /* Moves the button higher, adjust as needed */
+  right: 7px; /* Moves the button more to the right, adjust as needed */
+  color: #ffffff;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001; /* Must be higher than the modal's z-index */
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    margin: 20% auto; 
+    width: 90%; 
+    font-size: 14px; 
+  }
+  .close-btn {
+    font-size: 24px;
+  }
+}
+
+@keyframes modalOpen {
+  from {opacity: 0; transform: translateY(-100px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+
+
 .extras {
   position: absolute; 
   z-index: 2 !important; 
