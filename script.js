@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   let backgroundMusic;
+  let audioPlayed = false;
 
   function startAudio() {
+    if (!audioPlayed && audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
     if (!backgroundMusic) {
       fetch('Starry Night (Piano).mp3') 
         .then(response => response.arrayBuffer())
@@ -13,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundMusic.loop = true; 
           backgroundMusic.connect(audioContext.destination);
           backgroundMusic.start(0);
+          audioPlayed = true;
         }).catch(e => console.error("Error with decoding audio data", e));
+    } else if (!backgroundMusic.isPlaying) { 
+      backgroundMusic.start(0);
     }
   }
 
@@ -35,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   let hideTimeout = null;
+
   let isButtonAltered = false; 
 
   function teleportButton() {
@@ -84,37 +93,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 200);
   }
   
+  
   noButton.addEventListener('mouseenter', teleportButton);
   noButton.addEventListener('click', teleportButton);
   
-  function shootHeartsFromButton() {
-    const numberOfHearts = 10; 
+  
+function shootHeartsFromButton() {
+  const numberOfHearts = 10; 
 
-    for (let i = 0; i < numberOfHearts; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      document.body.appendChild(heart);
+  for (let i = 0; i < numberOfHearts; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    document.body.appendChild(heart);
 
-      const rect = noButton.getBoundingClientRect();
-      const heartX = rect.left + noButton.offsetWidth / 2;
-      const heartY = rect.top + noButton.offsetHeight / 2;
+    const rect = noButton.getBoundingClientRect();
+    const heartX = rect.left + noButton.offsetWidth / 2;
+    const heartY = rect.top + noButton.offsetHeight / 2;
 
-      heart.style.left = `${heartX}px`;
-      heart.style.top = `${heartY}px`;
+    heart.style.left = `${heartX}px`;
+    heart.style.top = `${heartY}px`;
 
-      const angle = Math.random() * Math.PI * 2; 
+    const angle = Math.random() * Math.PI * 2; 
 
-      const velocity = 100 + Math.random() * 100; 
-      const velocityX = Math.cos(angle) * velocity;
-      const velocityY = Math.sin(angle) * velocity;
+    const velocity = 100 + Math.random() * 100; 
+    const velocityX = Math.cos(angle) * velocity;
+    const velocityY = Math.sin(angle) * velocity;
 
-      const rotation = 40 + Math.random() * 100;
-      heart.style.transform = `rotate(${rotation}deg)`;
+    const rotation = 40 + Math.random() * 100;
+    heart.style.transform = `rotate(${rotation}deg)`;
 
-      requestAnimationFrame(function moveHeart(time) {
-        heart.style.left = `${heartX + velocityX}px`;
-        heart.style.top = `${heartY + velocityY}px`;
-      });
-    }
+    requestAnimationFrame(function moveHeart(time) {
+      heart.style.left = `${heartX + velocityX}px`;
+      heart.style.top = `${heartY + velocityY}px`;
+    });
   }
+}
+  
+  
+  function isHeartInView(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  
+  
+  
+  
+
+  noButton.addEventListener('mouseenter', teleportButton);
+  noButton.addEventListener('click', teleportButton);
+  noButton.addEventListener('touchstart', teleportButton); 
+
+
+  onload = () => {
+    const c = setTimeout(() => {
+      document.body.classList.remove("not-loaded");
+      clearTimeout(c);
+    }, 1000);
+};
 });
